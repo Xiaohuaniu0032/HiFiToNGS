@@ -74,6 +74,7 @@ while (<IN>){
 	my $qual_len = length($qual);
 
 	my $idx = 0;
+	my $flag = 0;
 	my $max_idx = $seq_len - $ins_frag_len; # 10 - 5 (6/7/8/9/10)
 	while ($idx <= $max_idx){
 		my $frag = substr($seq,$idx,$ins_frag_len);
@@ -90,12 +91,13 @@ while (<IN>){
 
 
 		# <read>:<is filtered>:<control number>:<sample number>
-		print FQ1 "$header 1\:N\:0\:1\n"; # https://help.basespace.illumina.com/files-used-by-basespace/fastq-files
+		$flag += 1;
+		print FQ1 "$header\_$flag 1\:N\:0\:1\n"; # https://help.basespace.illumina.com/files-used-by-basespace/fastq-files
 		print FQ1 "$fwd_r1\n";
 		print FQ1 "\+\n";
 		print FQ1 "$fwd_r1_qual\n";
 
-		print FQ2 "$header 2\:N\:0\:1\n";
+		print FQ2 "$header\_$flag 2\:N\:0\:1\n";
 		print FQ2 "$rev_r2\n";
 		print FQ2 "\+\n";
 		print FQ2 "$rev_r2_qual\n";
