@@ -69,7 +69,8 @@ while (<IN>){
 	# read1: ----- 500bp
 	# read2:    ----- 500bp
 
-	my $overlap_len = 200;
+	my $overlap_len = int($ins_frag_len * 0.8); # if ins frag len is 500, then overlap len is 400
+	my $skip_len = $ins_frag_len - $overlap_len;
 	my $seq_len = length($seq);
 	my $qual_len = length($qual);
 
@@ -102,7 +103,7 @@ while (<IN>){
 		print FQ2 "\+\n";
 		print FQ2 "$rev_r2_qual\n";
 
-		$idx += $overlap_len;
+		$idx += $skip_len;
 	}
 }
 close IN;
